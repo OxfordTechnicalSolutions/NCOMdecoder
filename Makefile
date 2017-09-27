@@ -4,28 +4,35 @@
 #                                                           #
 #############################################################
 
-#Directory variables
-EXAMPLES_DIR=examples
-LIBRARY_DIR =nav
-OBJECT_DIR  =obj
+#Directories
+IDIR 			 =nav
+EXAMPLE_DIR=examples
 
 #Compiler settings
-CC          =gcc
-CFLAGS			=-I$(LIBRARY_DIR)
+CC    =gcc
+CFLAGS=-I$(IDIR)
 
-#Library files
-_LIBRARY = NComRxC.h
-LIBRARY  = $(patsubst %,$(LIBRARY_DIR)/%,$(_LIBRARY))
+#NCOMdecoder dependencies
+_DEPS = NComRxC.h
+DEPS  = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-#Object files
-_OBJ = NComRxC.o NComToCsv.o
-OBJ = $(patsubst %,$(OBJECT_DIR)/%,$(_OBJ))
+#NCOMdecoder object files required
+_OBJ = NComRxC.o
+OBJ  = $(patsubst %,$(IDIR)/%,$(_OBJ))
 
+#Example object files required
+_EXAMPLE = NcomToCsv.o
+EXAMPLE  = $(patsubst %,$(EXAMPLE_DIR)/%,$(_EXAMPLE))
 
-NComToCsv: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+#Rule for *library* object files
+$(IDIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+#Rule for the executable
+NComToCsv: $(OBJ) $(EXAMPLE)
+	gcc -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 
-#clean:
-#	rm $(OBJECT_DIR)/*.o *~ core $(INCDIR)/*~
+clean:
+	rm $(IDIR)/*.o *~ core $(INCDIR)/*~
