@@ -122,7 +122,7 @@
 	#define PRIu32        "I32u"               //!< Printing unsigned decimal format macro for the standard unsigned integer type of 32 bits.
 	#define PRIu64        "I64u"               //!< Printing unsigned decimal format macro for the standard unsigned integer type of 64 bits.
 #else
-#if(__cplusplus)
+#if(__cplusplus && (__cplusplus > 199711L))
 #include <cstdint>
 #include <cinttypes>
 	using std::int8_t;
