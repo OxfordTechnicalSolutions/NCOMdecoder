@@ -11,6 +11,7 @@ EXAMPLE_DIR=examples
 #Compiler settings
 CC    =gcc
 CFLAGS=-I$(IDIR)
+LDFLAGS=-lm
 
 #NCOMdecoder dependencies
 _DEPS = NComRxC.h
@@ -30,7 +31,7 @@ $(IDIR)/%.o: %.c $(DEPS)
 
 #Rule for the executable
 NComToCsv: $(OBJ) $(EXAMPLE)
-	gcc -o $@ $^ $(CFLAGS)
+	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 .PHONY: clean
 
