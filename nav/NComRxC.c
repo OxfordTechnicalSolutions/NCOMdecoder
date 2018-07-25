@@ -125,6 +125,12 @@
 #ifndef M_PI
 #define M_PI (3.1415926535897932384626433832795)  //!< Pi.
 #endif
+
+#ifndef M_PI_2
+#define M_PI_2     1.57079632679489661923	      //!< Pi/2
+#endif
+
+
 #define DEG2RAD             (M_PI/180.0)  //!< Convert degrees to radians.
 #define RAD2DEG             (180.0/M_PI)  //!< Convert radians to degrees.
 #define POS_INT_24          (8388607)     //!< Maximum value of a two's complement 24 bit integer.
