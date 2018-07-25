@@ -5,7 +5,7 @@
 #############################################################
 
 #Directories
-IDIR       =../nav
+IDIR       =../src
 EXAMPLE_DIR=.
 
 #Compiler settings
