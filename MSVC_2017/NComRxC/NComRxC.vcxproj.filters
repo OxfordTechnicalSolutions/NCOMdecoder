@@ -21,7 +21,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\nav\NComRxC.h">
+    <ClInclude Include="..\..\src\NComRxC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\nav\NComRxC.c">
+    <ClCompile Include="..\..\src\NComRxC.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
