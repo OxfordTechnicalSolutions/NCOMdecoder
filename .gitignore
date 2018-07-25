@@ -9,3 +9,10 @@
 
 # Ignore csv (output) files in example folder
 example/*.csv
+*.lib
+*.obj
+*.tlog
+*.lastbuildstate
+*.pch
+*.log
+*.pdb
