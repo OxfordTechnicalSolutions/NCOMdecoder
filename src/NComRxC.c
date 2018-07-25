@@ -4826,7 +4826,7 @@ static void DecodeExtra30(NComRxC *Com)
 	{
 		char buffer[12];
 
-		sprintf(buffer, "%06" PRId32, i);
+		//sprintf(buffer, "%06" PRId32, i);
 
 		NComSetOsScriptId(Com, buffer, 11);
 	}
@@ -5503,11 +5503,11 @@ static void DecodeExtra49(NComRxC *Com)
 		   (Com->mGpsPrimary->mType == GPS_TYPE_OEMV || Com->mGpsPrimary->mType == GPS_TYPE_OEM6) &&
 		   (sn < 700000))
 		{
-			sprintf(buffer, "007-0%06" PRIu32, sn);
+			//sprintf(buffer, "007-0%06" PRIu32, sn);
 		}
 		else
 		{
-			sprintf(buffer, "%" PRIu32, sn);
+			//sprintf(buffer, "%" PRIu32, sn);
 		}
 
 		NComSetOmniStarSerial(Com, buffer, 15);
