@@ -11,13 +11,21 @@ The folder contains a simple program that exports an NCOM file to a CSV file, us
 
 ## Instructions to build and run example program
 
-First clone this repository.
+***
+NB: This has been tested on the following platforms:
+* Unix (MacOS)
+* MINGW64 (Windows 10)
 
-Then,
+_Please note there appears to be an issue running in Cygwin._
+***
 
 ```
+# First clone this repository
+git clone https://github.com/OxfordTechnicalSolutions/NCOMdecoder.git
+cd NCOMdecoder
+
 # Change directory into example source code folder
-cd example      
+cd example
 
 # Run make, which includes library files in nav (specified in Makefile)
 make            
