@@ -35,4 +35,4 @@ NComToCsv: $(OBJ) $(EXAMPLE)
 .PHONY: clean
 
 clean:
-	rm $(IDIR)/*.o *~ core $(INCDIR)/*~
+	rm $(IDIR)/*.o $(EXAMPLE_DIR)/*.o $(EXAMPLE_DIR)/*.exe
