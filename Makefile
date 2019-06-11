@@ -20,11 +20,11 @@ CFLAGS=-g \
 		-I$(EXAMPLE_INC_DIR) \
 		-I$(WRAPPER_INC_DIR)
 
-all: wrapper_test
+all: wrapper_test wrapper_library 
 
 nav_objects:
 	@echo "Building NComRxC nav objects"
-	@$(CC) -c $(NAV_INC_DIR)/NComRxC.c -o $(NAV_INC_DIR)/NComRxC.o
+	@$(CC) -c $(CFLAGS) $(NAV_INC_DIR)/NComRxC.c -o $(NAV_INC_DIR)/NComRxC.o
 
 example_objects: nav_objects
 	@echo "Building example objects"
@@ -40,14 +40,20 @@ example: nav_objects example_objects
 wrapper_objects: nav_objects
 	@echo "Building wrapper objects"
 	@$(CC) -c $(CFLAGS) $(WRAPPER_INC_DIR)/NComRxCWrapper.cpp \
-						-o $(WRAPPER_INC_DIR)/NComRxCWrapper.o
+						-o $(WRAPPER_INC_DIR)/NComRxCWrapper.o \
+
+wrapper_library:
+	@echo "Building NComRxC library"
+	@$(CC) -shared -o ${WRAPPER_INC_DIR}/bin/libNComRxCLib.so \
+						$(NAV_INC_DIR)/NComRxC.o \
+						$(WRAPPER_INC_DIR)/NComRxCWrapper.o
 
 wrapper_test_objects: wrapper_objects
 	@echo "Building the wrapper test objects"
 	@$(CC) -c $(CFLAGS) $(WRAPPER_INC_DIR)/NComRxCWrapperTest.cpp \
 						-o $(WRAPPER_INC_DIR)/NComRxCWrapperTest.o
 
-wrapper_test: wrapper_test_objects wrapper_objects
+wrapper_test: wrapper_test_objects
 	@echo "Building the wrapper test executable"
 	@mkdir -p $(WRAPPER_INC_DIR)/bin
 	@$(CC) $(CFLAGS) $(WRAPPER_INC_DIR)/NComRxCWrapperTest.o \
@@ -61,8 +67,8 @@ clean:
 	@echo $(EXAMPLE_DIR)
 	@rm \
 	$(NAV_INC_DIR)/*.o \
-	$(EXAMPLE_INC_DIR)/*.o \
 	$(WRAPPER_INC_DIR)/*.o \
+	$(EXAMPLE_INC_DIR)/*.o \
 	$(EXAMPLE_INC_DIR)/*.exe \
 	$(EXAMPLE_INC_DIR)/*.o \
 
