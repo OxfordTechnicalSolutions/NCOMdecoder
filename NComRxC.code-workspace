@@ -1,8 +1,12 @@
 {
 	"folders": [
 		{
-			"path": "/Users/hhaider/Projects/NCOMdecoder"
+			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"ostream": "cpp"
+		}
+	}
 }
