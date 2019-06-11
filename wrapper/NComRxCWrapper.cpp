@@ -1,6 +1,8 @@
 #include "NComRxCWrapper.hpp"
 #include <stdio.h>
 #include <string>
+#include <iostream>
+#include <bitset>
 
 NComRxC* CreateNComRxC()
 {
@@ -19,8 +21,10 @@ bool UpdatePacket(NComRxC* nrxPtr, unsigned char inputChar)
     return (NComNewChar(nrxPtr, inputChar) == COM_NEW_UPDATE) ? true : false; 
 }
   
-double GetMeasurement(NComRxC* nrxPtr, std::string measName)
+double GetMeasurement(NComRxC* nrxPtr, const char* inputMeasName)
 {
+	std::string measName(inputMeasName);
+
 	// Print the measurments listed in the header
 	if (nrxPtr->mIsTimeValid)
 	{
