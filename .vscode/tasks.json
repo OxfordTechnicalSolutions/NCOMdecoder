@@ -22,6 +22,19 @@
                     "message": 5
                 }
             }
-        }
+        },
+        {
+            "label": "build library for multiplat",
+            "type": "shell",
+            "command": "MathFuncsLib.sh",
+            "args":[ 
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },       
+
+
     ]
 }
