@@ -5,14 +5,19 @@
             "label": "Build with make",
             "type": "shell",
             "command": "make",
-            "args": ["all"],
+            "args": [
+                "all"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": {
                 "owner": "cpp",
-                "fileLocation": ["relative", "${workspaceRoot}"],
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
                 "pattern": {
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
@@ -26,15 +31,13 @@
         {
             "label": "build library for multiplat",
             "type": "shell",
-            "command": "MathFuncsLib.sh",
-            "args":[ 
-            ],
+            "command": "./MultiPlatBuildScript.sh",
+            "args": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
-        },       
-
-
+            },
+            "problemMatcher": []
+        }
     ]
 }
