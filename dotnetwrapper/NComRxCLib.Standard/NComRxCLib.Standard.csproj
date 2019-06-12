@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>NComRxCLib</RootNamespace>
+    <AssemblyName>NComRxCLib</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <Import Project="..\NComRxCLib.Shared\NComRxCLib.Shared.projitems" Label="Shared" Condition="Exists('..\NComRxCLib.Shared\NComRxCLib.Shared.projitems')" />
+</Project>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<package>
+<metadata>
+    <id>NComRxCLib</id>
+    <version>$version$</version>
+    <authors>OxTS</authors>
+    <description>C++ Wrapper library for using the NComRxC web decoder</description>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright 2018</copyright>
+</metadata>
+<files>
+
+    <!-- Android -->
+    <file src="NComRxCLib.Android/bin/Release/NComRxCLib.dll" target="lib/MonoAndroid81/NComRxCLib.dll" />
+    <file src="NComRxCLib.Android/bin/Release/NComRxCLib.pdb" target="lib/MonoAndroid81/NComRxCLib.pdb" />
+
+    <!-- iOS -->
+    <file src="NComRxCLib.iOS/bin/Release/NComRxCLib.dll" target="lib/Xamarin.iOS10/NComRxCLib.dll" />
+    <file src="NComRxCLib.iOS/bin/Release/NComRxCLib.pdb" target="lib/Xamarin.iOS10/NComRxCLib.pdb" />
+
+    <!-- netstandard2.0 -->
+    <file src="NComRxCLib.Standard/bin/Release/netstandard2.0/NComRxCLib.dll" target="lib/netstandard2.0/NComRxCLib.dll" />
+    <file src="NComRxCLib.Standard/bin/Release/netstandard2.0/NComRxCLib.pdb" target="lib/netstandard2.0/NComRxCLib.pdb" />
+
+</files>
+</package>

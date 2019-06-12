@@ -1,0 +1,36 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NComRxCLib.Shared", "NComRxCLib.Shared\NComRxCLib.Shared.shproj", "{57824929-523C-4730-B564-035F232ABF78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NComRxCLib.Standard", "NComRxCLib.Standard\NComRxCLib.Standard.csproj", "{658FB8D4-2BCF-4D14-8564-20A72B3039FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NComRxCLib.Android", "NComRxCLib.Android\NComRxCLib.Android.csproj", "{7E340E1A-7154-4730-B95F-DF938AF62DD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NComRxCLib.iOS", "NComRxCLib.iOS\NComRxCLib.iOS.csproj", "{0ACD62D1-64B6-43BE-9A1B-B7B931382213}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{9AEFBB92-1C7F-48F1-A2DC-A11DD538B9F8}"
+	ProjectSection(SolutionItems) = preProject
+		NComRxCLib.nuspec = NComRxCLib.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{658FB8D4-2BCF-4D14-8564-20A72B3039FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658FB8D4-2BCF-4D14-8564-20A72B3039FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658FB8D4-2BCF-4D14-8564-20A72B3039FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658FB8D4-2BCF-4D14-8564-20A72B3039FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E340E1A-7154-4730-B95F-DF938AF62DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E340E1A-7154-4730-B95F-DF938AF62DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E340E1A-7154-4730-B95F-DF938AF62DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E340E1A-7154-4730-B95F-DF938AF62DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ACD62D1-64B6-43BE-9A1B-B7B931382213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ACD62D1-64B6-43BE-9A1B-B7B931382213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ACD62D1-64B6-43BE-9A1B-B7B931382213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ACD62D1-64B6-43BE-9A1B-B7B931382213}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
