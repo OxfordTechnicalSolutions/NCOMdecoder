@@ -4,7 +4,53 @@
     <id>NComRxCLib</id>
     <version>$version$</version>
     <authors>OxTS</authors>
-    <description>C++ Wrapper library for using the NComRxC web decoder</description>
+    <description>
+    How to use:
+    
+    1. Instantiate NComRxC
+    2. Loop over the input byte array and pass them into UpdateDecoder, check for
+    the return bool to be true 
+    3. When the bool is true you havea new NCOM packet decoded and you can use 
+    DecodeMeasurement to get one of the supported measurements below
+    
+    Native architectures architectures supported are:
+    
+    Android:
+    x86
+    x86_64
+    arm
+    arm64
+    
+    iOS:
+    x86_64
+    arm64
+    arm64e
+
+    Measurements supported:
+    
+    Lat 
+    Lon 
+    Alt 
+    Ax
+    Ay
+    Az
+    InsNavMode
+    SerialNumber
+    GpsPosMode
+    GpsVelMode
+    GpsAttMode
+    mGpsNumObs
+    mTime
+    mCmdChars
+    mCmdCharsSkipped
+    mCmdErrors
+
+    If you ask for anything else with the DecodeMeasurement() function, you will get a 0.
+
+    </description>
+    <summary>
+    C++ Wrapper library for using the NComRxC web decoder
+    </summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright 2018</copyright>
 </metadata>

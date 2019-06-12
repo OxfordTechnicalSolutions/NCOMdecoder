@@ -12,9 +12,13 @@ CLEANUP=true
 {
     echo "Copying source files to tmp directory"
 
-    # removing bin/tmp directories
-    find . -name "bin" -type d -exec rm -rf "{}" \;
-    find . -name "tmp" -type d -exec rm -rf "{}" \;
+    if [ $CLEANUP = true ]
+    then
+        # removing bin/tmp directories
+        find . -name "bin" -type d -exec rm -rf "{}" \;
+        find . -name "tmp" -type d -exec rm -rf "{}" \;
+    fi
+
 
     # Create directory structure
     mkdir bin
@@ -35,8 +39,18 @@ CLEANUP=true
 
 } &> /dev/null
 
-declare -a AndroidArchitectures=("x86" "x86_64" "arm" "arm64")
-declare -a iOSArchitectures=("x86_64" "arm64" "arm64e")
+declare -a AndroidArchitectures=(\
+                                "x86" \
+                                "x86_64" \
+                                "arm" \
+                                "arm64"\
+                                )
+
+declare -a iOSArchitectures=(\
+                            "x86_64" \
+                            "arm64" \
+                            "arm64e"\
+                            )
 
 # Compiler variables
 LibraryName="NComRxCLib"
