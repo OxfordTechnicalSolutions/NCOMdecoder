@@ -28,24 +28,42 @@
 
     Measurements supported:
     
-    Lat 
-    Lon 
-    Alt 
-    Ax
-    Ay
-    Az
-    InsNavMode
-    SerialNumber
-    GpsPosMode
-    GpsVelMode
-    GpsAttMode
-    mGpsNumObs
-    mTime
-    mCmdChars
-    mCmdCharsSkipped
-    mCmdErrors
+    IsTimeValid    
+    Time           
+    IsLatValid 
+    Lat            
+    IsLonValid 
+    Lon            
+    IsAltValid 
+    Alt            
+    IsAxValid  
+    Ax             
+    IsAyValid  
+    Ay             
+    IsAzValid  
+    Az             
+    IsInsNavModeValid
+    InsNavMode    
+    IsSerialNumberValid
+    SerialNumber 
+    IsGpsPosModeValid
+    GpsPosMode 
+    IsGpsVelModeValid
+    GpsVelMode 
+    IsGpsAttModeValid
+    GpsAttMode 
+    IsGpsNumObsValid
+    GpsNumObs      
+    IsCmdCharsValid
+    CmdChars       
+    IsCmdCharsSkippedValid
+    CmdCharsSkipped
+    IsCmdPktsValid
+    CmdPkts         
+    IsCmdErrorsValid
+    CmdErrors  
 
-    If you ask for anything else with the DecodeMeasurement() function, you will get a 0.
+    If you ask for anything else with the DecodeMeasurement( function, you will get a 0.
 
     </description>
     <summary>
