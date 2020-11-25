@@ -144,7 +144,7 @@ static void report(const NComRxC *nrx)
 {
 	assert(nrx);
 
-	printf("\rChars Read %" PRIu32 ", Packets Read %" PRIu32 ", Chars Skipped %" PRIu32,
+	printf("\rChars Read %" PRIu64 ", Packets Read %" PRIu64 ", Chars Skipped %" PRIu64,
 		NComNumChars(nrx), NComNumPackets(nrx), NComSkippedChars(nrx));
 
 	fflush(stdout);
