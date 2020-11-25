@@ -165,7 +165,11 @@ static void print(FILE *fp, const NComRxC *nrx)
 	// Add in the headers to the file
 	if (HeaderWritten == 0)
 	{
-		fprintf(fp, " Time(),"
+#if __linux__
+		fprintf(fp," Time(),"
+#else
+		fwprintf(fp, L" Time(),"
+#endif
 					" Date,"
 					" Local Time,"
 					" Latitude(deg),"

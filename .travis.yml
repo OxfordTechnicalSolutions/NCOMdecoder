@@ -1,15 +1,34 @@
-language: c
+matrix:
+  include:
+    - os: linux
+      language: c
+      compiler: gcc
+      script:
+        - cd example
+        - make && ./NComToCsv 171019_031603.ncom 171019_031603.csv
+        - cd ..
+        - python test.py
 
-os:
-  - linux
-  - osx
-  - windows
+    - os: osx
+      language: c
+      compiler: gcc
+      script:
+        - cd example
+        - make && ./NComToCsv 171019_031603.ncom 171019_031603.csv
+        - cd ..
+        - python test.py
 
-compiler:
-  - gcc
-
-script:
-  - cd example
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make && ./NComToCsv 171019_031603.ncom 171019_031603.csv; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make && ./NComToCsv 171019_031603.ncom 171019_031603.csv; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then mingw32-make.exe && ./NComToCsv.exe 171019_031603.ncom 171019_031603.csv; fi
+    - os: windows
+      language: c
+      compiler: gcc
+      cache:
+        directories:
+          - $HOME/AppData/Local/Temp/chocolatey
+      before_install:
+        - choco install python --version 3.8.6
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+      script:
+        - cd example
+        - mingw32-make.exe && ./NComToCsv.exe 171019_031603.ncom 171019_031603.csv
+        - cd ..
+        - python test.py
