@@ -1,0 +1,18 @@
+language: c
+
+os:
+  - linux
+  - osx
+  - windows
+
+compiler:
+  - gcc
+  - clang
+  - mingw
+
+script:
+  - cd example
+  - make
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then NcomToCsv 171019_031603.ncom 171019_031603.csv; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then NcomToCsv 171019_031603.ncom 171019_031603.csv; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then NcomToCsv.exe 171019_031603.ncom 171019_031603.csv; fi
