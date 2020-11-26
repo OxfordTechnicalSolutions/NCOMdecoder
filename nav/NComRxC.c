@@ -7056,3 +7056,4 @@ static int Lib__apply_imu_b2n_corrections_w(Mat *w_nbb, const Mat *w_ibb, const 
 
 	return ec;
 }
+
