@@ -10,7 +10,7 @@ EXAMPLE_DIR=.
 
 #Compiler settings
 CC    =gcc
-CFLAGS=-I$(IDIR)
+CFLAGS=-I$(IDIR) -lm
 
 #NCOMdecoder dependencies
 _DEPS = NComRxC.h

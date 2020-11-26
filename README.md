@@ -1,4 +1,4 @@
-# NCOMdecoder
+# NCOMdecoder [![Build Status](https://travis-ci.com/OxfordTechnicalSolutions/NCOMdecoder.svg?branch=master)](https://travis-ci.com/OxfordTechnicalSolutions/NCOMdecoder)
 An NCOM decoder based in C for use with OxTS navigation systems, enabling users to decode the binary NCOM output. 
 
 ## Repository folders
@@ -13,7 +13,7 @@ The folder contains a simple program that exports an NCOM file to a CSV file, us
 
 ***
 NB: This has been tested on the following platforms:
-* Unix (MacOS)
+* Unix (MacOS, Xenial)
 * MINGW64 (Windows 10)
 
 _Please note there appears to be an issue running in Cygwin._
