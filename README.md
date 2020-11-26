@@ -1,4 +1,4 @@
-# NCOMdecoder [![Build Status](https://travis-ci.com/OxfordTechnicalSolutions/NCOMdecoder.svg?branch=master)](https://travis-ci.com/HMellor/NCOMdecoder)
+# NCOMdecoder [![Build Status](https://travis-ci.com/OxfordTechnicalSolutions/NCOMdecoder.svg?branch=master)](https://travis-ci.com/OxfordTechnicalSolutions/NCOMdecoder)
 An NCOM decoder based in C for use with OxTS navigation systems, enabling users to decode the binary NCOM output. 
 
 ## Repository folders
