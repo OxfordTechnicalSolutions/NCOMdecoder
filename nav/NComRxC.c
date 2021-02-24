@@ -750,6 +750,7 @@ static void NComInternalInvalidate(NComRxCInternal *Com)
 	// Timing
 	Com->mMilliSecs = -1;
 	Com->mMinutes = -1;
+	Com->mTriggerMinutes = -1;
 
 	// Rotations
 	Com->C_on_valid = 0;
@@ -3011,27 +3012,50 @@ static void UpdateNav(NComRxC *Com)
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Timing.
 
-	if ((trig == 0) && (Com->mInsNavMode > NAVIGATION_STATUS_RAWIMU))
+	if (Com->mInsNavMode > NAVIGATION_STATUS_RAWIMU)
 	{
-		int32_t ms = cast_2_byte_LE_to_uint16(mCurPkt+PI_TIME);
-
-		// Check if seconds have wrapped.
-		if ((ms < INT32_C(2000)) && (ComI->mMilliSecs > INT32_C(2000)) && (ComI->mMinutes >= INT32_C(0)))
+		int32_t ms = cast_2_byte_LE_to_uint16(mCurPkt + PI_TIME);
+		double time = 0, timeWeekSecond = 0;
+		uint32_t timeWeekCount = 0;
+		if (trig == 0)
 		{
-			ComI->mMinutes++;
+			// Check if seconds have wrapped.
+			if ((ms < INT32_C(2000)) && (ComI->mMilliSecs > INT32_C(2000)) && (ComI->mMinutes >= INT32_C(0)))
+			{
+				ComI->mMinutes++;
+			}
+			ComI->mMilliSecs = ms;
+			if (ComI->mMinutes >= INT32_C(0))
+			{
+				time = (double)ComI->mMinutes * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
+				timeWeekCount = ComI->mMinutes / MINUTES_IN_WEEK;
+				timeWeekSecond = ((double)(ComI->mMinutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
+			}
 		}
-
-		ComI->mMilliSecs = ms;
-
-		if (ComI->mMinutes >= INT32_C(0))
+		else
 		{
-			// Update time stamp.
-			NComSetTime(Com, ((double) ComI->mMinutes) * 60.0 + ((double) ComI->mMilliSecs) * 0.001);
+			// Check if seconds have wrapped.
+			if ((ms < INT32_C(2000)) && (ComI->mMilliSecs > INT32_C(2000)) && (ComI->mTriggerMinutes >= INT32_C(0)))
+			{
+				ComI->mTriggerMinutes++;
+			}
+			ComI->mMilliSecs = ms;
+			if (ComI->mTriggerMinutes >= INT32_C(0))
+			{
+				// Update time stamp.
+				time = (double)ComI->mTriggerMinutes * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
 
-			// Also store the GPS time for good measure.
-			NComSetTimeWeekCount (Com,           ComI->mMinutes / MINUTES_IN_WEEK);
-			NComSetTimeWeekSecond(Com, ((double)(ComI->mMinutes % MINUTES_IN_WEEK)) * 60.0 + ((double) ComI->mMilliSecs) * 0.001);
+				// Also store the GPS time for good measure.
+				timeWeekCount = ComI->mTriggerMinutes / MINUTES_IN_WEEK;
+				timeWeekSecond = ((double)(ComI->mTriggerMinutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
+			}
 		}
+		// Update time stamp.
+		NComSetTime(Com, time);
+
+		// Also store the GPS time for good measure.
+		NComSetTimeWeekCount(Com, timeWeekCount);
+		NComSetTimeWeekSecond(Com, timeWeekSecond);
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -4078,6 +4102,7 @@ static void DecodeExtra0(NComRxC *Com)
 	if (Com->mInsNavMode >= NAVIGATION_STATUS_INIT)
 	{
 		Com->mInternal->mMinutes = cast_4_byte_LE_to_int32(mCurStatus+0);
+		Com->mInternal->mTriggerMinutes = Com->mInternal->mMinutes;
 	}
 
 	if (mCurStatus[4] & 0x80) Com->mIsGpsNumObsValid  = 0; else NComSetGpsNumObs (Com, mCurStatus[4]);
