@@ -409,8 +409,11 @@ typedef struct
 
 	// For time (comes from Status and each cycle and needs combining).
 	int32_t mMilliSecs;
+	int32_t mTrigger1MilliSecs;
+	int32_t mTrigger2MilliSecs;
 	int32_t mMinutes;
-	int32_t mTriggerMinutes;
+	int32_t mTrigger1Minutes;
+	int32_t mTrigger2Minutes;
 
 	// To identify new triggers.
 	unsigned char mTrigCount;
