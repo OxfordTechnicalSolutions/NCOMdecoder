@@ -3041,40 +3041,24 @@ static void UpdateNav(NComRxC *Com)
 			}
 			case 1:
 			{
-				// Check if seconds have wrapped.
-				if ((ms < INT32_C(2000)) && (ComI->mTrigger1MilliSecs > INT32_C(2000)) && (ComI->mTrigger1Minutes >= INT32_C(0)))
-				{
-					ComI->mTrigger1Minutes++;
-				}
-				ComI->mTrigger1MilliSecs = ms;
-				if (ComI->mTrigger1Minutes >= INT32_C(0))
-				{
-					// Update time stamp.
-					time = (double)ComI->mTrigger1Minutes * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
+				// Already have this in ComI
+				// Update time stamp.
+				time = (double)ComI->mTrigger1Minutes * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
 
-					// Also store the GPS time for good measure.
-					timeWeekCount = ComI->mTrigger1Minutes / MINUTES_IN_WEEK;
-					timeWeekSecond = ((double)(ComI->mTrigger1Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
-				}
+				// Also store the GPS time for good measure.
+				timeWeekCount = ComI->mTrigger1Minutes / MINUTES_IN_WEEK;
+				timeWeekSecond = ((double)(ComI->mTrigger1Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
 				break;
 			}
 			case 2:
 			{
-				// Check if seconds have wrapped.
-				if ((ms < INT32_C(2000)) && (ComI->mTrigger2MilliSecs > INT32_C(2000)) && (ComI->mTrigger2Minutes >= INT32_C(0)))
-				{
-					ComI->mTrigger2Minutes++;
-				}
-				ComI->mTrigger2MilliSecs = ms;
-				if (ComI->mTrigger2Minutes >= INT32_C(0))
-				{
-					// Update time stamp.
-					time = (double)ComI->mTrigger2Minutes * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
+				// Already have this in ComI
+				// Update time stamp.
+				time = (double)ComI->mTrigger2Minutes * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
 
-					// Also store the GPS time for good measure.
-					timeWeekCount = ComI->mTrigger2Minutes / MINUTES_IN_WEEK;
-					timeWeekSecond = ((double)(ComI->mTrigger2Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
-				}
+				// Also store the GPS time for good measure.
+				timeWeekCount = ComI->mTrigger2Minutes / MINUTES_IN_WEEK;
+				timeWeekSecond = ((double)(ComI->mTrigger2Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
 				break;
 			}
 		}
@@ -4683,6 +4667,8 @@ static void DecodeExtra24(NComRxC *Com)
 		ms  = cast_2_byte_LE_to_uint16(mCurStatus+4);
 		c   = (int8_t)                 mCurStatus[6];
 
+		Com->mInternal->mTrigger1Minutes = min;
+		Com->mInternal->mTrigger1MilliSecs = ms;
 		NComSetTrigTime(Com, min * 60.0 + ms * 0.001 + c * FINETIME2SEC);
 	}
 }
@@ -5281,6 +5267,9 @@ static void DecodeExtra43(NComRxC *Com)
 		min = cast_4_byte_LE_to_int32 (mCurStatus+0);
 		ms  = cast_2_byte_LE_to_uint16(mCurStatus+4);
 		c   = (int8_t)                 mCurStatus[6];
+
+		Com->mInternal->mTrigger2Minutes = min;
+		Com->mInternal->mTrigger2MilliSecs = ms;
 
 		NComSetTrig2Time(Com, min * 60.0 + ms * 0.001 + c * FINETIME2SEC);
 	}
