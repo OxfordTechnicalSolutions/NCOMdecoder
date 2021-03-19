@@ -140,6 +140,7 @@
 #define MIN_VERT_SPEED      (0.07)        //!< 0.07 m/s hold distance.
 #define SPEED_HOLD_FACTOR   (2.0)         //!< Hold distance when speed within 2 sigma of 0.
 #define MINUTES_IN_WEEK     (10080)       //!< Number of minutes in a week.
+#define SECONDS_IN_WEEK     (604800)	  //!< Number of seconds in a week.
 
 // OmniStar status definitions
 #define NCOM_OMNI_STATUS_UNKNOWN      (0xFF)
@@ -749,11 +750,7 @@ static void NComInternalInvalidate(NComRxCInternal *Com)
 
 	// Timing
 	Com->mMilliSecs = -1;
-	Com->mTrigger1MilliSecs = -1;
-	Com->mTrigger2MilliSecs = -1;
 	Com->mMinutes = -1;
-	Com->mTrigger1Minutes = -1;
-	Com->mTrigger2Minutes = -1;
 
 	// Rotations
 	Com->C_on_valid = 0;
@@ -2959,10 +2956,9 @@ static void UpdateNav(NComRxC *Com)
 					NComSetTime(Com, Com->mTrigTime);
 					NComSetOutputPacketType(Com, OUTPUT_PACKET_IN1DOWN);
 					break;
-				case  43:
+				case  80:
 					NComSetTime(Com, Com->mTrig2Time);
-					NComSetOutputPacketType(Com, OUTPUT_PACKET_IN1UP);
-					trig = 2;
+					NComSetOutputPacketType(Com, OUTPUT_PACKET_IN1DOWN);
 					break;
 				case  65:
 					NComSetTime(Com, Com->mDigitalOutTime);
@@ -3016,58 +3012,31 @@ static void UpdateNav(NComRxC *Com)
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Timing.
 
-	if (Com->mInsNavMode > NAVIGATION_STATUS_RAWIMU)
+	if ((trig == 0) && (Com->mInsNavMode > NAVIGATION_STATUS_RAWIMU))
 	{
 		int32_t ms = cast_2_byte_LE_to_uint16(mCurPkt + PI_TIME);
 		double time = 0, timeWeekSecond = 0;
 		uint32_t timeWeekCount = 0;
-		switch (trig)
+		// Check if seconds have wrapped.
+		if ((ms < INT32_C(2000)) && (ComI->mMilliSecs > INT32_C(2000)) && (ComI->mMinutes >= INT32_C(0)))
 		{
-			case 0:
-			{
-				// Check if seconds have wrapped.
-				if ((ms < INT32_C(2000)) && (ComI->mMilliSecs > INT32_C(2000)) && (ComI->mMinutes >= INT32_C(0)))
-				{
-					ComI->mMinutes++;
-				}
-				ComI->mMilliSecs = ms;
-				if (ComI->mMinutes >= INT32_C(0))
-				{
-					time = (double)ComI->mMinutes * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
-					timeWeekCount = ComI->mMinutes / MINUTES_IN_WEEK;
-					timeWeekSecond = ((double)(ComI->mMinutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
-				}
-				break;
-			}
-			case 1:
-			{
-				// Already have this in ComI
-				// Update time stamp.
-				time = (double)ComI->mTrigger1Minutes * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
-
-				// Also store the GPS time for good measure.
-				timeWeekCount = ComI->mTrigger1Minutes / MINUTES_IN_WEEK;
-				timeWeekSecond = ((double)(ComI->mTrigger1Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger1MilliSecs) * 0.001;
-				break;
-			}
-			case 2:
-			{
-				// Already have this in ComI
-				// Update time stamp.
-				time = (double)ComI->mTrigger2Minutes * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
-
-				// Also store the GPS time for good measure.
-				timeWeekCount = ComI->mTrigger2Minutes / MINUTES_IN_WEEK;
-				timeWeekSecond = ((double)(ComI->mTrigger2Minutes % MINUTES_IN_WEEK)) * 60.0 + ((double)ComI->mTrigger2MilliSecs) * 0.001;
-				break;
-			}
+			ComI->mMinutes++;
+		}
+		ComI->mMilliSecs = ms;
+		if (ComI->mMinutes >= INT32_C(0))
+		{
+			time = (double)ComI->mMinutes * 60.0 + ((double)ComI->mMilliSecs) * 0.001;
 		}
 		// Update time stamp.
 		NComSetTime(Com, time);
+	}
 
-		// Also store the GPS time for good measure.
-		NComSetTimeWeekCount(Com, timeWeekCount);
-		NComSetTimeWeekSecond(Com, timeWeekSecond);
+	// GPS seconds into week and week counter are derived from the absolute nano timings
+	if (Com->mTime >= 0)
+	{
+		uint32_t week_count = (uint32_t)round(Com->mTime / SECONDS_IN_WEEK);
+		NComSetTimeWeekCount(Com, week_count);
+		NComSetTimeWeekSecond(Com, Com->mTime - (double)(week_count * SECONDS_IN_WEEK));
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -4114,8 +4083,6 @@ static void DecodeExtra0(NComRxC *Com)
 	if (Com->mInsNavMode >= NAVIGATION_STATUS_INIT)
 	{
 		Com->mInternal->mMinutes = cast_4_byte_LE_to_int32(mCurStatus+0);
-		Com->mInternal->mTrigger1Minutes = Com->mInternal->mMinutes;
-		Com->mInternal->mTrigger2Minutes = Com->mInternal->mMinutes;
 	}
 
 	if (mCurStatus[4] & 0x80) Com->mIsGpsNumObsValid  = 0; else NComSetGpsNumObs (Com, mCurStatus[4]);
@@ -4667,8 +4634,6 @@ static void DecodeExtra24(NComRxC *Com)
 		ms  = cast_2_byte_LE_to_uint16(mCurStatus+4);
 		c   = (int8_t)                 mCurStatus[6];
 
-		Com->mInternal->mTrigger1Minutes = min;
-		Com->mInternal->mTrigger1MilliSecs = ms;
 		NComSetTrigTime(Com, min * 60.0 + ms * 0.001 + c * FINETIME2SEC);
 	}
 }
@@ -5267,9 +5232,6 @@ static void DecodeExtra43(NComRxC *Com)
 		min = cast_4_byte_LE_to_int32 (mCurStatus+0);
 		ms  = cast_2_byte_LE_to_uint16(mCurStatus+4);
 		c   = (int8_t)                 mCurStatus[6];
-
-		Com->mInternal->mTrigger2Minutes = min;
-		Com->mInternal->mTrigger2MilliSecs = ms;
 
 		NComSetTrig2Time(Com, min * 60.0 + ms * 0.001 + c * FINETIME2SEC);
 	}
