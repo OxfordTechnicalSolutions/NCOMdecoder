@@ -2956,7 +2956,7 @@ static void UpdateNav(NComRxC *Com)
 					NComSetTime(Com, Com->mTrigTime);
 					NComSetOutputPacketType(Com, OUTPUT_PACKET_IN1DOWN);
 					break;
-				case  80:
+				case  43:
 					NComSetTime(Com, Com->mTrig2Time);
 					NComSetOutputPacketType(Com, OUTPUT_PACKET_IN1DOWN);
 					break;
